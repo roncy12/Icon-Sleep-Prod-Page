@@ -1,0 +1,974 @@
+{{#if settings.data_tag_enabled}}
+{{> components/products/carousel products=products list="Featured Products"}}
+{{else}}
+{{> components/products/carousel products=products}}
+{{/if}}
+<script>
+    $(document).ready(function() {
+                if ($(".show-features > div").find("ul").length > 0) {
+                    $('.special-feature').show();
+                } else {
+                   
+                }
+
+                if ($("#tr-data").length > 0) {
+                    $('.other-detail').show();
+
+                } else {
+                    $('.other-detail').hide();
+                }
+            }); 
+            
+            
+</script>
+
+        <div class="productView grn-matt-page" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+
+        {{#each product.reviews.messages}}
+            {{#if error}}
+                {{> components/common/alert/alert-error error}}
+            {{/if}}
+            {{#if success}}
+                {{> components/common/alert/alert-success success}}
+            {{/if}}
+        {{/each}}
+     
+    
+        <section class="productView-images" data-image-gallery>
+        {{!--
+            Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
+            for variant/rule image replacement
+        --}}
+        {{#if product.images.length '>' 1 }}
+        {{> components/carousel-content-announcement}}
+        {{/if}}
+        <figure class="productView-image"
+                data-image-gallery-main
+                {{#if product.main_image}}
+                data-zoom-image="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size }}"
+                {{/if}}
+                >
+            <div class="productView-img-container">
+                {{!-- Remove the surrounding a-element if there is no main image. --}}
+                {{#if product.main_image}}
+                    <a href="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size}}"
+                        target="_blank"{{#if schema}} itemprop="image"{{/if}}>
+                {{/if}}
+                {{> components/common/responsive-img
+                    image=product.main_image
+                    class="productView-image--default"
+                    fallback_size=theme_settings.product_size
+                    lazyload=theme_settings.lazyload_mode
+                    default_image=theme_settings.default_image_product
+                    otherAttributes="data-main-image"
+                }}
+                {{!-- Remove the surrounding a-element if there is no main image. --}}
+                {{#if product.main_image}}
+                    </a>
+                {{/if}}
+            </div>
+        </figure>
+        <ul class="productView-thumbnails"{{#gt product.images.length 4}} data-slick='{
+                "infinite": false,
+                "mobileFirst": true,
+                "dots": false,
+                "accessibility": false,
+                "slidesToShow": 6,
+                "slidesToScroll": 6
+            }'{{/gt}}>
+            {{#each product.images}}
+                <li class="productView-thumbnail">
+                    <a
+                        class="productView-thumbnail-link"
+                        href="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.zoom_size}}"
+                        data-image-gallery-item
+                        data-image-gallery-new-image-url="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.product_size}}"
+                        data-image-gallery-new-image-srcset="{{getImageSrcset this use_default_sizes=true}}"
+                        data-image-gallery-zoom-image-url="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.zoom_size}}"
+                    >
+                    {{> components/common/responsive-img
+                        image=this
+                        fallback_size=../theme_settings.productview_thumb_size
+                        lazyload=../theme_settings.lazyload_mode
+                    }}
+                    </a>
+                </li>
+            {{/each}}
+
+        </ul>
+        <!-- <div class="prodview-shipping grn-mat-shp">
+            <div class="grid-ship-details">
+                <div>                   
+                  
+                    <img class="lazyload fade-in from-bounce-in invi duration-1500 delay-00 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/Shipping_icon.png'}}"/>
+           
+                    
+                    <p class="text-capitalize">Free Shippings</p>
+                </div>
+                <div>                   
+                    <img class="lazyload fade-in from-bounce-in invi duration-1500 delay-900 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/Night-Icon.png'}}"/>
+                    
+                    <p class="text-capitalize">100 Night Sleep Trial</p>
+                </div>
+                <div>                   
+                    <img class="lazyload fade-in from-bounce-in invi duration-1500 delay-600 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/Certified_Icon.png'}}"/>
+               
+                    <p class="text-capitalize">Certified Products</p>
+                </div>
+                <div>                   
+                    <img class="lazyload fade-in from-bounce-in invi duration-1500 delay-300 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/Warranty_icon.png'}}"/>
+             
+                    <p class="text-capitalize">Long Term warranty</p>
+                </div>
+            </div>
+        </div> -->
+    </section>
+          <section class="productView-details green-matt-details">
+            <div class="productView-product green-matt-prod">
+
+                <div class="custom-productTitle green-matt-title stamped-display">
+                    <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
+                    <div class="d-flex align-items-center grn-matt-price  w-100">
+                        <h4 class="productView-price">Total Price: &nbsp </h4>
+                        {{#if product.call_for_price}}
+                        <p class="productView-price">
+                            <span style="font-size: 28px; font-weight: 800;">{{product.call_for_price}}</span>
+                        </p>
+                        {{/if}}
+                        <div class="productView-price"  style="font-size: 28px; font-weight: 800;">
+                            {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                                {{> components/products/price price=product.price schema_org=schema}}
+                            {{else}}
+                                {{> components/common/login-for-pricing}}
+                            {{/or}}
+                        </div>
+                        <!--u-hiddenVisually-->
+                    <div class="form-field form-field--stock {{#unless product.stock_level}}out-stock{{/unless}}">
+                        <label class="form-label form-label--alternate">
+                            <!--{{lang 'products.current_stock'}}-->
+                            <span style="display: none !important;"  data-product-stock >{{product.stock_level}}</span>
+                        </label>
+                    </div>
+                   </div>
+                    <!-- {{#if product.brand}}
+                        <h2 class="productView-brand"{{#if schema}} itemprop="brand" itemscope itemtype="http://schema.org/Brand"{{/if}}>
+                            <a href="{{product.brand.url}}"{{#if schema}} itemprop="url"{{/if}}><span{{#if schema}} itemprop="name"{{/if}}>{{product.brand.name}}</span></a>
+                        </h2>
+                    {{/if}} -->
+                  
+                        <!-- <div id="stamped-reviews-widget" class="grn-matt-stamp" style="display: inline-block;" data-widget-type="site-badge" data-badge-type="minimal" data-title="Verified Reviews" data-title-size="15" data-size-stars="12" data-element-id="2" data-lang="en">&nbsp;</div>
+                        <div id="stamped-main-widget" data-widget-style="standard" data-product-id="{{ product.id }}" data-title="Customer Reviews" data-style-color-title="#2f2f2b" data-style-color-text="#2f2f2b" data-style-color-link="#2f2f2b" data-fill-empty="true" data-random="? string:Customer Reviews ?" data-product-image="true"></div>    -->                   
+                    <div class="productView-description green-matt-desc ul" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+                        {{{product.description}}}
+                        {{{snippet 'product_description'}}}
+                    </div>
+ 
+                    <!-- <div id="stamped-reviews-widget" style="display: inline-block;" data-widget-type="site-badge" data-badge-type="minimal" data-title="Verified Reviews" data-title-size="15" data-size-stars="12" data-element-id="2" data-lang="en">&nbsp;</div> -->
+                
+                </div>
+                
+               
+
+    
+                <!--{{{region name="product_below_price"}}}
+    
+                {{product.detail_messages}}-->
+            </div>
+            <div class="productView-options grn-matt-opt {{#if settings.show_wishlist}}has-wishlist{{/if}}">
+                <div class="grn-matt-opt-div">
+                {{#if product.release_date }}
+                    <p>{{product.release_date}}</p>
+                {{/if}}
+
+                <form class="form grn-matt-form {{#if theme_settings.enable_circular_swatches}}swatches--round{{/if}}" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
+                      data-cart-item-add>
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="product_id" value="{{product.id}}"/>
+
+                    <div class="cus-options" data-product-option-change style="display:none;">
+                        {{#each product.options}}
+                            {{{dynamicComponent 'components/products/options'}}}
+                        {{/each}}
+                    </div>
+                    <div class="form-qty-cart">
+                    {{#if product.event_date}}
+                        {{> components/products/event-date}}
+                    {{/if}}
+                    
+                    {{#if product.can_purchase}}
+                        {{> components/products/add-to-cart}}
+                    {{/if}}
+                    
+                      {{#if product.out_of_stock}}
+                        {{#if product.out_of_stock_message}}
+                            {{> components/common/alert/alert-error product.out_of_stock_message}}
+                        {{else}}
+                            {{> components/common/alert/alert-error (lang 'products.sold_out')}}
+                        {{/if}}
+                    {{/if}}
+                    </div>
+                </form>
+    
+                {{#if settings.show_wishlist}}
+                    {{> components/common/wishlist-dropdown}}
+                {{/if}}
+                {{#if product.availability}}<div class="productView-availability"><i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-delivery-van" /></svg></i> {{product.availability}}</div>{{/if}}
+    
+                {{#or product.min_purchase_quantity product.max_purchase_quantity product.gift_wrapping_available product.shipping}}
+                    <dl class="productView-info">
+                        {{#if product.min_purchase_quantity}}
+                            <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
+                            <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
+                        {{/if}}
+                        {{#if product.max_purchase_quantity}}
+                            <dt class="productView-info-name">{{lang 'products.max_purchase_quantity'}}</dt>
+                            <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.max_purchase_quantity}}</dd>
+                        {{/if}}
+                        {{#if product.gift_wrapping_available}}
+                            <dt class="productView-info-name">{{lang 'products.gift_wrapping'}}</dt>
+                            <dd class="productView-info-value">{{lang 'products.gift_wrapping_available'}}</dd>
+                        {{/if}}
+                        {{#if product.shipping}}
+                            {{#if product.shipping.calculated}}
+                                <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                                <dd class="productView-info-value">{{lang 'products.shipping_calculated'}}</dd>
+                            {{else}}
+                                {{#if product.shipping.price.value '===' 0}}
+                                    <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                                    <dd class="productView-info-value">{{lang 'products.shipping_free'}}</dd>
+                                {{else}}
+                                    <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                                    <dd class="productView-info-value">{{lang 'products.shipping_fixed' amount=product.shipping.price.formatted}}</dd>
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}
+                    </dl>
+                {{/or}}
+                <div class="complete-set-tab">
+                    <h5>Complete the Set</h5>
+                    <div class="tabs-section">
+                      <h4 class="row nav-tab-wrapper mw-100">
+                          <a href="#tab-1" class="col col-xs-6 col-md-3 nav-tab nav-tab-active">Pillows</a>
+                          <a href="#tab-2" class="col col-xs-6 col-md-3 nav-tab">Protectors</a>
+                          <a href="#tab-3" class="col col-xs-6 col-md-3 nav-tab">Sheets</a>
+                      </h4>
+                    </div>
+                    <section id="tab-1" class="tab-content active">
+                      <div class="rowtab-content">
+                            <div class="first"> <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/images/stencil/1280x1280/products/384/3231/WKQQ02SD-Stacked-wb1548286649_original__51093.1630638982.jpg?c=1" alt=""> </div>
+                            <div class="sec">
+                                <h4><a href="#">Malouf Weeknder Shredded Memory Foam Pillow (2 PACK)</a></h4>
+                                <a href="/cart.php?action=add&sku=WKQQ02SD&source=buy_button" id="cart-click-item"><i class="fas fa-plus" id="add"></i></a> 
+                                <span class="price">$12.99</span>
+                            </div>
+                      </div>
+                      <div class="rowtab-content">
+                        <div class="first"> <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/images/stencil/1280x1280/products/384/3231/WKQQ02SD-Stacked-wb1548286649_original__51093.1630638982.jpg?c=1" alt=""> </div>
+                        <div class="sec">
+                            <h4><a href="#" >Malouf Gelled Microfiber® + Gel Dough® Layer</a></h4>
+                            <a href="/cart.php?action=add&sku=ZZKKX2GG&_ga=2.232531935.1167043985.1648430507-1538258752.1648430507" id="cart-click-item1"><i class="fas fa-plus" id="add"></i></a>
+                             <span class="price">$59.99</span>
+                        </div>
+                     </div>
+                     <div class="rowtab-content border-0">
+                        <div class="first"> <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/images/stencil/1280x1280/products/378/3165/ZZ_MPADZG_ZonedGel_AD_Hero-icon-WB1516136873_original__82197.1630637082.jpg?c=1" alt=""> </div>
+                        <div class="sec">
+                            <h4><a href="#" >Malouf Zoned Active Dough® + Cooling Gel</a></h4>
+                            <a href="/cart.php?action=add&sku=ZZKKMPADZG&source=buy_button" id="cart-click-item2"><i class="fas fa-plus" id="add"></i></a>
+                            <a href="/cart.php?action=remove&sku=ZZKKMPADZG" id="cart-click-item2"><i class="fas fa-plus" id="add"></i></a>
+                             <span class="price">$129.99</span>
+                        </div>
+                      </div>
+                    </section>
+                    <section id="tab-2" class="tab-content">
+                        <div class="rowtab-content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt eveniet debitis quis placeat nostrum recusandae laudantium ea eos, aperiam vel dicta. Molestias deserunt facere nesciunt voluptas assumenda, harum explicabo dolorem vitae enim quam eos officia ducimus exercitationem sit laboriosam dolor recusandae quibusdam a, nulla adipisci blanditiis placeat illo! Eaque tempora ipsam doloremque quam autem natus numquam ea exercitationem nemo voluptatem eum distinctio totam corrupti, saepe quisquam nostrum nesciunt fuga modi rem optio eius aliquid quibusdam porro quas! Animi suscipit at cumque perferendis earum perspiciatis dolores ratione minima qui eius veritatis autem odit ducimus eaque obcaecati dolorum, vel maiores? Facere, dicta.
+                        </div>
+                    </section>
+                    <section id="tab-3" class="tab-content">
+                          <div class="row text-content">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi asperiores ducimus at nulla itaque voluptatibus voluptatum impedit nihil dolore magnam consequatur perspiciatis quasi modi autem distinctio beatae maxime, quia possimus cum veniam ipsum dolores corporis nostrum. Corrupti, fugiat maiores atque voluptatibus assumenda nesciunt, tempore ullam velit iure voluptatum cupiditate dicta itaque veniam ex accusantium accusamus voluptas doloribus sit temporibus dolore sunt tenetur quisquam numquam. Officia deleniti consectetur repellat nihil itaque labore sequi ipsam incidunt laudantium eos non, velit, expedita, necessitatibus est ipsa provident. Laboriosam voluptates ipsam magnam! Tempore culpa accusamus, hic ratione delectus quod explicabo, eos dolorum, vel possimus fugiat?
+                          </div>
+                      </section>
+                </div>
+    
+                <!-- <div class="prodview-shipping-details grn-matt-ship">
+                    <div style="border-right: 1px solid #888;"> 
+                        <p class="text-uppercase font-weight-normal">Ships by:</p>
+                        <h4>{{moment "now" "MM/DD/YYYY"}}</h4>
+                    </div>
+                    <div>
+                        <p class="text-uppercase font-weight-normal">Delivery by:</p>
+                        <h4 class="text-capitalize">Within 2-7 days*</h4>
+                    </div>
+                </div> -->
+                <!-- <div class="learnmore-div">
+                    <p style="font-size: 14px; margin-top: 4px; text-align: left;">*To learn more about shipping, check out our <a href="/shipping-transit-chart/" style="color:#00d2ff;"> Shipment Transit Chart.</a></p>
+                </div> -->
+                <div class="faqs-desc specs-desc">
+                    <div class="other-detail" style="display: none;">
+                    <input id="_0" type="checkbox">
+                    <label class="terms-showMore specs-label" for="_0">
+                        <p>Product Specifications </p><span class="icon"><svg><use xlink:href="#icon-chevron-down"></use></svg></span>
+                        <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-square-outlined-button-1-.png?t=1626224949'}}" />
+                    </label>
+                    <div style="padding: 0;">
+                        <div class="data-table" id="product-attribute-specs-table"> 
+                            <table class="specs-table-prod other-detail" style="width:100%">
+                            <div class="productView-info"> 
+                                <!-- {{#each product.custom_fields}} -->
+                         
+                                    <tr id="tr-data">
+                                        <div>
+                                            <td class="productView-info-name p-0 py-2">{{name}}:</td>
+                                            <td class="productView-info-value p-0">{{{value}}}</td>
+                                        </div>
+                                    </tr>
+                             
+                                <!-- {{/each}} -->
+                            </div>
+                        </table>
+                        </div>
+                    </div>
+                    <!-- MEASUREMENTS -->
+                    <div class="other-detail" style="display: none;">
+                        <input id="_11" type="checkbox">
+                        <label class="terms-showMore specs-label measurements" for="_11">
+                            <p>Measurements </p><span class="icon"><svg><use xlink:href="#icon-chevron-down"></use></svg></span>
+                            <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-square-outlined-button-1-.png?t=1626224949'}}" />
+                        </label>
+                        <div style="padding: 0;">
+                            <div class="data-table" id="product-attribute-specs-table"> 
+                                <table class="specs-table-prod other-detail" style="width:100%">
+                                <div class="productView-info"> 
+                                    <!-- {{#each product.custom_fields}} -->
+                             
+                                        <tr id="tr-data">
+                                            <div>
+                                                <!-- <td class="productView-info-name p-0 py-2">{{name}}:</td>
+                                                <td class="productView-info-value p-0">{{{value}}}</td> -->
+                                            </div>
+                                        </tr>
+                                 
+                                    <!-- {{/each}} -->
+                                </div>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- WARRANTY INFO -->
+                    <div class="other-detail" style="display: none;">
+                        <input id="_12" type="checkbox">
+                        <label class="terms-showMore specs-label measurements" for="_12">
+                            <p>Warranty Info</p><span class="icon"><svg><use xlink:href="#icon-chevron-down"></use></svg></span>
+                            <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-square-outlined-button-1-.png?t=1626224949'}}" />
+                        </label>
+                        <div style="padding: 0;">
+                            <div class="data-table" id="product-attribute-specs-table"> 
+                                <table class="specs-table-prod other-detail" style="width:100%">
+                                <div class="productView-info"> 
+                                    <!-- {{#each product.custom_fields}} -->
+                             
+                                        <tr id="tr-data">
+                                            <div>
+                                                <!-- <td class="productView-info-name p-0 py-2">{{name}}:</td>
+                                                <td class="productView-info-value p-0">{{{value}}}</td> -->
+                                            </div>
+                                        </tr>
+                                 
+                                    <!-- {{/each}} -->
+                                </div>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="special-feature" style="display: none;">
+                        <input id="_4" type="checkbox">
+                        <label class="terms-showMore specs-label mt-2" for="_4" >
+                            <p style="color: #173456; ">SPECIAL FEATURES </p><img class="fas fa-plus s-plus" id="add" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/pllus-icon-img.png'}}">
+                            <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-square-outlined-button-1-.png?t=1626224949'}}" />
+                        </label>
+                        <div class="show-features">
+                            <div class="productView-description green-matt-desc" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+                                {{{product.description}}}
+                                {{{snippet 'product_description'}}}
+                             </div>                        
+                        </div>
+                    </div>
+
+                    <div class="shipping--section">
+                        <div class="flex-section">
+                            <div class="col-section">
+                                <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/free-shipping-icon-pro.png" alt="">
+                            </div>
+                            <div class="col-section">
+                                <h5>Free Shipping & Returns</h5>
+                                <p>Receive your new Icon Sleep mattress right at your doorstep with our free shipping anywhere in the continental US. Return policies apply.</p>
+                            </div>
+                        </div>
+                        <div class="flex-section">
+                            <div class="col-section">
+                                <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/quick-easy-icon.png" alt="">
+                            </div>
+                            <div class="col-section">
+                                <h5>Quick & Easy Setup</h5>
+                                <p>The mattress can be used within a few minutes upon opening the package. Setup is just a few easy steps.</p>
+                            </div>
+                        </div>
+                        <div class="flex-section">
+                            <div class="col-section">
+                                <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/year-warranty-prod.png" alt="">
+                            </div>
+                            <div class="col-section">
+                                <h5>10 Year Warranty</h5>
+                                <p>Icon Sleep's 10-Year Limites Warranty gives you specfic legal rights, and you may have other rights that may vary from state to state.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                 
+            {{#if theme_settings.show_product_description_below}}
+                <div class="productView-scrollToDescription" id="description">
+                    <a href="#description{{#if is_ajax}}_{{product.id}}{{/if}}">{{lang 'products.product_details'}} <span class="icon"><svg><use xlink:href="#icon-arrow-down"></use></svg></span></a>
+                </div>
+              {{/if}}
+            </div>
+        </section>
+    </div>
+
+
+
+        <div class="green-matt-features">
+            <div class="re-container">
+                <div class="grn-ftr-text">
+                    <h2>Lorem ipsum dolor sit amet</h2>
+                    <!-- <h2 class="font-weight-bold text-capitalize text-dark">Sleep Has Never Been This Cool</h2>
+                    <p>Meet the coolest bed in town. Icon Sleep’s COOL is a gel-infused memory foam mattress equipped with an advanced cooling and heat management system that regulates your body temperature. It’s breathable and comfortable your sleep has never been this cool. </p>     -->
+                </div>
+        
+                <div class="matt-ftr-div" data-aos="fade-up">
+                    <div class="grn-matt-img">
+                        <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal1.jpg'}}" />
+                    </div>
+                    <div class="grn-matt-img">
+                        <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal2.jpg'}}" />
+                    </div>
+                    <div class="grn-matt-img">
+                        <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal3.jpg'}}" />
+                    </div>
+                     <div class="grn-matt-img">
+                         <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal4.jpg'}}" />
+                    </div>
+                     <div class="grn-matt-img">
+                         <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal5.jpg'}}" />
+                    </div>
+                    <div class="grn-matt-img">
+                        <img class="lazyload" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/seal6.jpg'}}" />
+                   </div>                    
+                </div>
+            </div>
+        </div>
+
+        <div class="types-of-foams">
+            <div class="text-section first">
+                <h4>Knitted Jacquard Fabric</h4>
+                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
+                    nunc obdurat. Et tunc curat ludo mentis aciem, egestatem, potestatem
+                    dissolvit ut glaciem. Sors immanis et inanis. rota tu volubilis status
+                    malus vana salus semper dissolubilis.</p>
+                <a href="">Learn More</a>
+            </div>
+            <div class="text-section sec">
+                <h4>COOLest Gel-Infused Memory Foam</h4>
+                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
+                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
+                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
+                    malus vana salus semper dissolubilis.</p>
+                <a href="">Learn More</a>
+            </div>
+            <div class="text-section third">
+                <h4>Pressure Relief High-Density Foam</h4>
+                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
+                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
+                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
+                    malus vana salus semper dissolubilis.</p>
+                <a href="">Learn More</a>
+            </div>            
+            <div class="text-section fourth">
+                <h4>Support High-Density Foam</h4>
+                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
+                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
+                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
+                    malus vana salus semper dissolubilis.</p>
+                <a href="">Learn More</a>
+            </div>
+            <div class="text-section fifth">
+                <h4>Fire Resistant Base</h4>
+                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
+                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
+                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
+                    malus vana salus semper dissolubilis.</p>
+                <a href="">Learn More</a>
+            </div>
+            
+            <div class="image-layers">
+                <img class="first" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattress-layers-active-1.png" alt="">
+                <img class="sec" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattress-layers-active-2.png" alt="">
+                <img class="third" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattress-layers-active-3.png" alt="">
+                <img class="fourth" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattress-layers-active-4.png" alt="">
+                <img class="fifth" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattress-layers-active-5.png" alt="">
+            </div>
+        </div>
+
+        <div class="dreams-section">
+            <div class="img-section">
+                <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/dreams.jpg?t=1648186056&_gl=1*1b22ymq*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="" class="w-100">
+            </div>
+            <div class="text-section">
+                <h2>The Mattress of Your Dreams</h2>
+                <p>Icon Sleep's COOL has a gel-infused memory foam top that promotes a
+                    conducive sleep environment for all sleepers. This dream-inducing
+                    layer on top of durable pressure relief and support foams make up for
+                    an outstanding mattress architecture that promises more well-rested
+                    mornings.</p>
+                <a href="">Learn More</a>
+            </div>
+        </div>
+
+        <div class="firmness-section">
+            <h2>Finding the perfect firmness for you</h2>
+            <p>Dont know which mattress firmness Is for you? 88% of sleepers prefer a mattress that is in the happy medium range
+                of 4-7. See below chart for illustration on how our mattress is Constructed to please the masses.</p>
+            <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/rate-matt-level.png?t=1648185847&_gl=1*1v1nie0*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+            <div class="flex-gif">
+                <div>
+                    <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/animation-soft.gif?t=1648187450&_gl=1*1w43ncs*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+                    <p>Soft</p>
+                </div>
+                <div>
+                    <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/animation-med.gif?t=1648187451&_gl=1*68kozn*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+                    <p>Medium</p>
+                </div>
+                <div>
+                    <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/animation-firm.gif?t=1648187453&_gl=1*68kozn*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+                    <p>Firm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="icon-difference-section">
+            <h2>The iconic difference</h2>
+            <p>Icon Sleep mattresses are not necessarily better. But compared to what the competition offer, we present the most<br>
+                reasonably priced package for the same quality. In short, we offer the same value for less.</p>
+            <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/icon-difference-chart.jpg?t=1648188286&_gl=1*1eavtqq*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+            <p><i style="color: #888;">*All prices are for Queen-sized mattress models.</i></p>
+        </div>
+
+        <div class="we-learned-section">
+            <div class="img-content">
+                <img class="w-100" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/usa-learned.png?t=1648190363&_gl=1*ylbr7k*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
+            </div>
+            <div class="text-content">
+                <div>
+                    <h2>We Learned the Hard Way!</h2>
+                    <p>Buying a overseas mattress may save a few bucks today. but those
+                        savings will not help if it needs to be replaced in a few years. We know
+                        from experience! Prior to 2018 we imported from China. The quality was
+                        inferior and the cost savings were not enough to offset all the warranty
+                        claims that followed. We now proudly manufacturer in McDonough. GA.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="newreview-section">
+            <div class="flex">
+                <h2>Reviews <span style="font-weight: normal;">(4.5)</span></h2>
+                <div id="stamped-reviews-widget" style="display: inline-block;" data-widget-type="site-badge" data-badge-type="minimal" data-title="Verified Reviews" data-title-size="15" data-size-stars="12" data-element-id="1" data-lang="en"></div>
+                <a href="/reviews/">See all reviews</a>
+            </div>
+
+            <div id="stamped-main-widget" data-widget-type="one-column" data-take-reviews='4'>		
+            </div>
+        </div>
+        <div class="have-questionsec">
+            <h2>Have questions?</h2>
+            <p class="quotes">Here are some frequently asked questions.</p>
+        
+            <div class="question-grid">
+                <div class="grid-con">
+                    <div class="title-flex">
+                        <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
+                        <h4>What's the best mattress size for me?</h4>
+                    </div>
+                    <p>Choosing the right mattress size depends on several factors. Are you sharing your bed with a partner or pets? Do you like having plenty of living space in your bedroom? How do you want your bed to be placed?</p>
+                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                </div>
+                <div class="grid-con">
+                    <div class="title-flex">
+                        <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
+                        <h4>What type of foundation should I use for my mattress?</h4>
+                    </div>
+                    <p>Our mattresses can work with almost all standard foundations. The harder and sturdier the base, the better the mattress will perform, as with all foam beds. Platform bases offer the most support, but steel or wooden...</p>
+                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                </div>
+                <div class="grid-con">
+                    <div class="title-flex">
+                        <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
+                        <h4>How long should I wait before I can use my mattress?</h4>
+                    </div>
+                    <p>You may start using it right out of the box! Take note, however, that it would take 48 hours up to a week for your mattress to fully decompress. Sleeping on your mattress can help with the decompression.</p>
+                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                </div>
+                <div class="grid-con">
+                    <div class="title-flex">
+                        <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
+                        <h4>Have other questions?</h4>
+                    </div>
+                    <p>Feel free to contact us via<br>
+                        Toll-free number: <b>+123 456 7890</b><br>
+                        Email us at: <b>support@icon-sleep.com</b><br>
+                        Or fill in the contact form below.<br><br>
+                        Service Hours:<br>
+                        <b>Mon-Fri: 8am-5pm</b></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="get-in-bg">
+            <div class="get-intouch">
+                <div>
+                    <h2>Get in Touch</h2>
+                    <p>Curabitur sapien dui, rutrum id sem et, mollis varius dolor. Suspendisse ac aliquam orci. Proin diam risus, ornare id pellentesque sit amet,</p>
+                </div>
+                <div>
+                    <form data-contact-form class="form" action="/pages.php?action=sendContactForm" method="post">
+                        <div class="form-row form-row--half">
+                            <div class="form-field">
+                                <label for="fname">Name</label>
+                                <input type="text" id="fname" name="fname" placeholder="Name">
+                                <label for="email">Email </label>
+                                <input type="email" id="email" name="email" placeholder="Email">
+                            </div>
+                            <div class="form-field">
+                                <label for="msg">Message</label>
+                                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Your Inquiry" style="height: 80px;"></textarea><br<br>
+                                <div class="form-actions">
+                                    <input class="button button--primary" type="submit" value="Send Message">
+                                </div>
+                            </div>
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+
+
+
+<!-- OLD CONTENT -->
+<div class="d-none">        
+    <div class="sub-prodview-podimg green-matt-sub">
+        <div class="fade-in from-bounce-in duration-1500 in-view features-div-grn">
+            <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/cooling.png'}}"/>
+            <h5>Cooling & Breathability</h5>
+            <p>The most advanced cooling and heat management technology we've ever put on a mattress.</p>
+        </div>
+        <div class="fade-in from-bounce-in duration-1500 delay-300 in-view features-div-grn">
+            <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/spinal.png'}}"/>
+            <h5>Top-notch Spinal Support</h5>
+            <p>Engineered to provide outstanding durability, support, and pressure relief for sleepers of all sizes.</p>
+        </div>
+        <div class="fade-in from-bounce-in duration-1500 delay-600 in-view features-div-grn">
+            <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/absorb.png'}}"/>
+            <h5 class="text">Motion Absorption & Isolation</h5>
+            <p>Say goodbye to motion-related sleep interruptions and enjoy greater sleep and better mornings.</p>
+        </div>
+    </div>
+    
+    
+    <div class="prodview-anatomy green-anatomy" style="margin-bottom: 5rem;">
+        <div style="width:49%;" class="green-anatomy-div" >
+            <img class="lazyload position-relative w-100" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/bed-anatomy-02.gif?t=1637111885&_gl=1*w8wq5a*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTYzNzExMTQwNy4zODAuMS4xNjM3MTExODgyLjQ2'}}" />
+            <p style="color: #173456;">*for illustration only</p>
+        </div>
+        <div style="padding:0 5%; display: grid; place-content: center;" class="animation-element slide-right in-view">
+            <h4 style="color:#18253f; font-weight: 700; font-size: 28px; text-transform: inherit;" >Take A Closer Look.</h4>
+            <h4 style="color:#18253f; font-weight: bold; font-size: 28px; text-transform: inherit; margin-top: 0;" >An architecture that assures luxury.</h4>
+            <br>
+            <ul class="check-blue">
+                <li class="lazyload fade-in duration-1500 delay-00 in-view">Impossibly soft outer material for comfort overload</li>
+                <li class="lazyload fade-in duration-1500 delay-300 in-view">Certified inner cover for protection against fires</li>
+                <!--<li class="animation-element invi fade-in duration-1500 delay-600 in-view">Gel-infused memory foam for cooling and airflow</li>-->
+                <li class="lazyload fade-in duration-1500 delay-900 in-view">Dual layers of high-performance foams for pressure relief and weight absorption</li>
+                <li class="lazyload fade-in duration-1500 delay-1200 in-view">Dedicated comfort layer for that distinct lavish feel</li>
+                <li class="lazyload fade-in duration-1500 delay-1500 in-view">Durable base for overall support</li>
+            </ul>
+        </div>
+    
+    
+    </div>
+
+        <div class="prodview-sizechart green-matt mt-5">
+            <h3 class="text-center text-light font-weight-bold">Size Comparison</h3>
+            <p class="text-center text-light">Worried your bed won't fit? Check out our size chart.</p>
+            <div class="prodview-sizechart-img green-mattress-chart">
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-00 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/green-matt-twin.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-300 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/green-matt-twin-xl.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-600 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/green-matt-full.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-900 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/gm-short-queen.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-1200 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/gm-queen.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-600 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/gm-king.png'}}" />
+                </div>
+                <div>
+                    <img class="lazyload slide-in from-slide-up duration-1500 delay-1800 in-view" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/gm-cal-king.png'}}" />
+                </div>
+            </div>
+        </div>
+
+    
+    <div class="prodview-advantage green-mattress-ques">
+        <h3 class="text-center">Want to sleep a little longer?</h3>
+        <p class="text-center w-75 mx-auto">If you want to indulge in long, deep slumbers, our COOLest Gel mattresses are pretty much willing to do the job.</p>
+          <div class="prodview-advantage-con">
+            <div>
+                <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/mattress-ques-img.png'}}" />
+                <h4>Sleep without interruptions</h4>
+                <p>Eliminate your sleeping problems with COOLest Gel No Motion Transfer feature that allows you to sleep longer without annoying breaks in between your dreams.</p>
+            </div>
+            <div>
+                <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/mattress-ques-img1.png'}}" />
+                <h4>Top-notch comfort all night long</h4>
+                <p>Experience pressure relief from aches and pains with COOLest Gel multi-layer architecture that provides excellent spinal support and extra comfort all night long.</p>
+            </div>
+            <div>
+                <img class="lazyload" src="{{cdn 'https://store-z2qdisybty.mybigcommerce.com/content/prodpage/mattress-ques-img2.png'}}" />
+                <h4>Long-lasting mattress</h4>
+                <p>COOLest Gel mattresses are designed to last for years thanks to its extremely durable foam layers and all-natural tea extracts that help maintain freshness.</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="previewModal" class="modal modal--large" data-reveal>
+        <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
+            <span aria-hidden="true">&#215;</span>
+        </a>
+        <div class="modal-content"></div>
+        <div class="loadingOverlay"></div>
+    </div>
+    
+
+
+
+        
+
+    <div class="product-review-section greenh2" style="">
+          <h2  class="text-center">Share Your COOLest Gel Mattress Story</h2>
+        <span class="text-center d-block" style="color: #174567; font-size: 18px; margin-bottom: 5em;">See why customers love Icon Sleep or write a Review</span>
+        <div class="review-stamped mx-auto" style="width: 85%;">        
+            <div id="stamped-reviews-widget" data-widget-type="carousel" data-product-id="{{ product.id }}" data-auto-play="true" data-auto-play-speed="10000" data-fill-empty="true" data-title="Authentic Reviews From Real Customers" data-random="? string:Authentic reviews from real customers. ?"></div>
+                </div>
+        </div>    
+    </div>
+    
+        
+    <div class="FAQS-categ green-faq-categ mt-5 d-none">
+        <div class="faqs-content">
+            
+            <h4 style="">Frequently Asked Questions</h4>
+            <p style="text-align: center; color: #fff;">See why customers love Icon Sleep or write a Review</p>
+            <div class="faqs-desc">
+                <input id="_1" type="checkbox">
+                <label class="terms-showMore" for="_1">  What's the best mattress size for me? <i class="fas fa-plus" id="add"></i><img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-sign-icon.png?t=1624521698'}}" />
+                </label>
+                <div>
+                    <p>Choosing the right mattress size depends on several factors. Are you sharing your bed with a partner or pets? Do you like having plenty of living space in your bedroom? How do you want your bed to be placed? Breaking down these details will help you pick the right size that fits your preferences.</p>
+                </div>
+        
+                <input id="_2" type="checkbox"> <label class="terms-showMore" for="_2"> What type of foundation should I use for my mattress? 
+                    <i class="fas fa-plus" id="add"></i>
+    <!--			    <i class="fas fa-times" id="close"></i>-->
+                <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-sign-icon.png?t=1624521698'}}" />
+                </label>
+                <div>
+                    <p>Our mattresses can work with almost all standard foundations. The harder and sturdier the base, the better the mattress will perform, as with all foam beds. Platform bases offer the most support, but steel or wooden slatted foundations are also great options. If you want to improvise, adding a piece of plywood atop the base can give additional support.</p>
+                </div>
+    
+                <input id="_3" type="checkbox"> <label class="terms-showMore" for="_3"> How long should I wait before I can use my mattress?
+                    <i class="fas fa-plus" id="add"></i>
+                    <img class="fas fa-times" id="close" src="{{cdn 'https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/minus-sign-icon.png?t=1624521698'}}" /></label>
+                <div>
+                   <p>You may start using it right out of the box! Take note, however, that it would take 48 hours up to a week for your mattress to fully decompress. Sleeping on your mattress can help with the decompression. To know more about setting up and mattress care, read this <a href="/mattress-care-setup/" style="text-align: center; color: #00d2ff;">Guides</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script>
+    $(document).ready(function() {
+       $('.grn-matt-form .form-select#attribute_select_182').on('change', function() {
+            var value = $(this).val();
+            // alert(value);
+            if(value == "378"){
+                console.log(`6"`);
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/gt-6.gif?t=1641369872&_gl=1*52ddif*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTY0MTM2OTg5Ni41NTUuMC4xNjQxMzY5ODk2LjYw');
+            }else if(value == "383"){
+                console.log("8");
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/gt-8.gif?t=1641369877&_gl=1*1tjl55z*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTY0MTM2OTg5Ni41NTUuMC4xNjQxMzY5ODk2LjYw');
+            }else if(value == "384"){
+                console.log(`10"`);
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/gt-10.gif?t=1641369881&_gl=1*1tjl55z*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTY0MTM2OTg5Ni41NTUuMC4xNjQxMzY5ODk2LjYw');
+            }else if(value == "385"){
+                console.log(`12"`);
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/gt-12.gif?t=1641369885&_gl=1*489t08*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTY0MTM2OTg5Ni41NTUuMC4xNjQxMzY5ODk2LjYw');
+            }else if(value == "386"){
+                console.log(`14"`);
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/gt-14.gif?t=1641369890&_gl=1*489t08*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTY0MTM2OTg5Ni41NTUuMC4xNjQxMzY5ODk2LjYw');
+            }else{
+                console.log("Choose Options");
+                $(".prodview-anatomy.green-anatomy div img").attr('src','https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/bed-anatomy-02.gif?t=1637111885&_gl=1*w8wq5a*_ga*MTgzNTE5MzI1My4xNjE3Nzc3MjAy*_ga_WS2VZYPC6G*MTYzNzExMTQwNy4zODAuMS4xNjM3MTExODgyLjQ2');
+
+            }
+        });
+    
+    });
+</script>
+<style>
+    [data-product-attribute] .form-option.form-option-swatch {
+        display: inline-block !important;
+    }
+    .form-field.form-field--stock.in-stock::before {
+    content: "IN STOCK";
+    background: #00d2ff;
+    color: #fff;
+    margin-bottom: 0;
+    border-radius: 10px;
+    margin-left: 4px;
+    padding: 0 4px;
+    text-transform: uppercase;
+    font-family: 'Almarai';
+    font-size: 14px;
+}
+
+.form-field.form-field--stock.out-stock::before {
+    content: "OUT OF STOCK";
+    background: red;
+    color: #fff;
+    margin-bottom: 0;
+    border-radius: 10px;
+    margin-left: 4px;
+    padding: 0 4px;
+    text-transform: uppercase;
+    font-family: 'Almarai';
+    font-size: 14px;
+}
+
+</style>
+
+<script>
+    $(document).ready(function() {
+
+        $(".form-select, .form-option-swatch").click(function(){
+            setTimeout(function(){
+                var variantStock = $('[data-product-stock]').text();
+                            
+                if(variantStock >= "1"){
+                    $(".form-field.form-field--stock").addClass("in-stock");
+                    $(".form-field.form-field--stock").removeClass("out-stock");                    
+                }else if(variantStock == "0" || variantStock == ""){
+                    $(".form-field.form-field--stock").addClass("out-stock");
+                    $(".form-field.form-field--stock").removeClass("in-stock");
+                }else{
+
+                }
+            },1000);
+        });
+
+        setTimeout(function(){
+            var variantStock = $('[data-product-stock]').text();
+            if(window.BCData.product_attributes.instock == true){
+                setTimeout(function(){
+                    $(".form-field.form-field--stock").addClass("in-stock");
+                    $(".form-field.form-field--stock").removeClass("out-stock"); 
+                    $(".form-field.form-field--stock").removeClass("u-hiddenVisually");
+
+                },1000);
+
+            }else{
+                setTimeout(function(){
+                    $(".form-field.form-field--stock").addClass("out-stock");
+                    $(".form-field.form-field--stock").removeClass("in-stock "); 
+                    $(".form-field.form-field--stock").removeClass("u-hiddenVisually");
+                },1000);
+            }
+        },1000);
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.nav-tab').click(function(e) {
+        //Toggle tab link
+        $(this).addClass('nav-tab-active').siblings().removeClass('nav-tab-active');
+
+        //Toggle target tab
+            $($(this).attr('href')).addClass('active').siblings().removeClass('active');
+
+        });
+
+        // console.log({{product.id}});
+
+        
+        $('.image-layers img.first').click(function(e) {
+            $('.image-layers img.first').hide();
+            $('.image-layers img.sec').show();
+            $('.types-of-foams .text-section.first').hide();
+            $('.types-of-foams .text-section.sec').show();
+        });
+        $('.image-layers img.sec').click(function(e) {
+            $('.image-layers img.sec').hide();
+            $('.image-layers img.third').show();
+            $('.types-of-foams .text-section.sec').hide();
+            $('.types-of-foams .text-section.third').show();
+        });
+        $('.image-layers img.third').click(function(e) {
+            $('.image-layers img.third').hide();
+            $('.image-layers img.fourth').show();
+            $('.types-of-foams .text-section.third').hide();
+            $('.types-of-foams .text-section.fourth').show();
+        });
+        $('.image-layers img.fourth').click(function(e) {
+            $('.image-layers img.fourth').hide();
+            $('.image-layers img.fifth').show();
+            $('.types-of-foams .text-section.fourth').hide();
+            $('.types-of-foams .text-section.fifth').show();
+        });
+        $('.image-layers img.fifth').click(function(e) {
+            $('.image-layers img.fifth').hide();
+            $('.image-layers img.first').show();
+            $('.types-of-foams .text-section.fifth').hide();
+            $('.types-of-foams .text-section.first').show();
+        });
+       
+    });
+</script>
+
+
+<script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+<script type="text/javascript">//<![CDATA[ 
+StampedFn.init({ apiKey: 'pubkey-2L5A8636KNO175w7kxJ92V55UDvpz3', storeUrl: 'icon-sleep.com' }); 
+// ]]></script>

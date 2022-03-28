@@ -1,0 +1,249 @@
+---
+product:
+    videos:
+        limit: {{theme_settings.productpage_videos_count}}
+    reviews:
+        limit: {{theme_settings.productpage_reviews_count}}
+    related_products:
+        limit: {{theme_settings.productpage_related_products_count}}
+    similar_by_views:
+        limit: {{theme_settings.productpage_similar_by_views_count}}
+---
+{{inject 'productId' product.id}}
+
+{{#partial "page"}}
+
+    <style>
+        #myProgress {
+            box-sizing: content-box;
+            height: 20px;
+            position: relative;
+            margin: 20px 0 20px 0;
+            background: #555;
+            border-radius: 25px;
+            padding: 10px;
+            box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+        }
+        #myProgress > #myBar {
+            display: block;
+            height: 100%;
+            border-radius: 20px;
+            background-color: #2bc253;
+            background-image: linear-gradient(center bottom, #2bc253 37%, #54f054 69%);
+            box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: width .2s ease-in;
+        }
+        #myProgress > #myBar > span{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+            z-index: 1;
+            background-size: 50px 50px;
+            animation: progressBar-move 2s linear infinite;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .loading-Modal{
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            max-width: 100%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            z-index: 515;
+            padding: 3rem 3rem 1.5rem;
+            background-color: white;
+        }
+        .progressModal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: .8;
+            z-index: 510;
+        }
+        @keyframes progressBar-move {
+            0% {
+            background-position: 0 0;
+            }
+            100% {
+            background-position: 50px 50px;
+            }
+        }
+    </style>
+    {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+    {{#each product.shipping_messages}}
+        {{> components/common/alert/alert-info message}}
+    {{/each}}
+
+    <div itemscope itemtype="http://schema.org/Product">
+ 
+        {{#contains product.title "Hybrid"}}
+            {{> aoc-custom/components/products/custom-hybrid-mattress schema=true settings=../settings schema=true}}
+        {{else}}     
+            {{> components/products/custom-green-mattress schema=true settings=../settings schema=true}}
+        {{/contains}}
+        <div style="display:none;" >
+
+
+            {{{region name="product_below_content"}}}
+    
+            {{#if product.videos.list.length}}
+                {{> components/products/videos product.videos}}
+            {{/if}}
+    
+            {{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}
+                {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+            {{/all}}
+            {{> components/products/tabs}}
+        </div>
+        <!-- Modal Adding To Cart -->
+          <div class="loading-Modal">
+            <h3 class="progressModal-heading">Adding your products to cart</h3>
+            <div id="myProgress">
+                <div id="myBar">
+                    <span></span>
+                </div>
+            </div>
+          </div>
+          <div class="progressModal-overlay"></div>
+    </div>
+    
+
+{{/partial}}
+{{> layout/base}}
+
+
+<script>
+    $(document).ready(function(){
+        $("#cart-click-item").click(function() {
+            $(".loading-Modal").css("display","block");
+            $(".progressModal-overlay").css("display","block");
+            
+        
+        });
+        $("#cart-click-item1").click(function() {
+            $(".loading-Modal").css("display","block");
+            $(".progressModal-overlay").css("display","block");
+        
+        });
+        $("#cart-click-item2").click(function() {
+            $(".loading-Modal").css("display","block");
+            $(".progressModal-overlay").css("display","block");
+        
+        });
+    });
+</script>
+
+<script>
+//     fetch("https://api.bigcommerce.com/icon-sleep.com/z2qdisybty/v3/carts/", {
+//     "method": "GET",
+//     "headers": {
+//         "Content-Type": "application/json",
+//         "Accept": "application/json",
+//         "X-Auth-Token": ""
+//     }
+//     })
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch(err => {
+//      console.error(err);
+// });
+function getCart(url) {
+  return fetch(url, {
+    method: "GET",
+    credentials: "same-origin"
+  })
+  .then(response => response.json());
+
+}
+
+getCart('/api/storefront/carts?include=lineItems.digitalItems.options,lineItems.physicalItems.options')
+  .then(data => console.log(JSON.stringify(data)))
+  .catch(error => console.error(error));
+
+  function addCartItem(url, cartId) {
+  return fetch(url + cartId, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    // body: JSON.stringify(cartItems),
+  })
+  .then(response => response.json());
+
+};
+
+function createCart(url, cartItems) {
+  return fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(cartItems),
+  })
+  .then(response => response.json());
+
+};
+function addCartItem(url, cartId) {
+  return fetch(url + cartId , {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json());
+
+};
+
+addCartItem(`/api/storefront/carts/`, `e02d95a9-8c52-4b5a-92ef-4a0ab2ca7adb`, {
+  "lineItems": [
+    {
+      "quantity": 1,
+      "productId": 384
+    }
+  ]
+})
+.then(data => console.log(JSON.stringify(data)))
+
+//   Zone Active
+// function deleteCartItem(url, cartId) {
+//   return fetch(url + cartId, {
+//     method: "DELETE",
+//     credentials: "same-origin",
+//     headers: {
+//       "Content-Type": "application/json",
+//     }
+//   })
+//   .then(response => response.json());
+// }
+
+// deleteCartItem(`/api/storefront/carts/`, `e633be9f-92bb-4a11-99bf-ff4e36891d5d`)
+//   .then(data => console.log(JSON.stringify(data)))
+//   .catch(error => console.log(error));
+
+// Gelled Microfiber
+// 0048640f-27db-4b1f-acba-370317f3f14c
+
+// Malouf Weeknder Shredded Memory Foam Pillow (2 PACK)
+// 0048640f-27db-4b1f-acba-370317f3f14c
+
+
+</script>
