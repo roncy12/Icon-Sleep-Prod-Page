@@ -171,57 +171,61 @@ function getCart(url) {
 
 }
 
-getCart('/api/storefront/carts?include=lineItems.digitalItems.options,lineItems.physicalItems.options')
+getCart('/api/storefront/carts?include=lineItems.physicalItems.productId/include=lineItems.physicalItems.productId')
   .then(data => console.log(JSON.stringify(data)))
   .catch(error => console.error(error));
 
-  function addCartItem(url, cartId) {
-  return fetch(url + cartId, {
-    method: "POST",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    // body: JSON.stringify(cartItems),
-  })
-  .then(response => response.json());
+  var obj = data => JSON.stringify(data);
+  console.log(obj);
 
-};
+// function createCart(url, cartItems) {
+//   return fetch(url, {
+//     method: "POST",
+//     credentials: "same-origin",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(cartItems),
+//   })
+//   .then(response => response.json());
+// };
 
-function createCart(url, cartItems) {
-  return fetch(url, {
-    method: "POST",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(cartItems),
-  })
-  .then(response => response.json());
 
-};
-function addCartItem(url, cartId) {
-  return fetch(url + cartId , {
-    method: "POST",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => response.json());
+// createCart(`/api/storefront/carts`, {
+//   "lineItems": [
+//     {
+//       "quantity": 1,
+//       "productId": 384,
+//       "variantId": 1155
+//     }
+//   ]}
+// )
+// .then(data => console.log(JSON.stringify(data.id)))
+// .catch(error => console.error(error));
 
-};
 
-addCartItem(`/api/storefront/carts/`, `e02d95a9-8c52-4b5a-92ef-4a0ab2ca7adb`, {
-  "lineItems": [
-    {
-      "quantity": 1,
-      "productId": 384
-    }
-  ]
-})
-.then(data => console.log(JSON.stringify(data)))
+// function addCartItem(url, cartId) {
+//   return fetch(url + cartId , {
+//     method: "POST",
+//     credentials: "same-origin",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(cartId),
+//   })
+//   .then(response => response.json());
+
+// };
+
+// addCartItem(`/api/storefront/carts/`, `e02d95a9-8c52-4b5a-92ef-4a0ab2ca7adb`, {
+//   "lineItems": [
+//     {
+//       "quantity": 1,
+//       "productId": 384
+//     }
+//   ]
+// })
+// .then(data => console.log(JSON.stringify(data)))
 
 //   Zone Active
 // function deleteCartItem(url, cartId) {
@@ -235,7 +239,7 @@ addCartItem(`/api/storefront/carts/`, `e02d95a9-8c52-4b5a-92ef-4a0ab2ca7adb`, {
 //   .then(response => response.json());
 // }
 
-// deleteCartItem(`/api/storefront/carts/`, `e633be9f-92bb-4a11-99bf-ff4e36891d5d`)
+// deleteCartItem(`/api/storefront/carts/`, `8386e3ed-8a1e-4027-8fb0-dfeb6bb83074`)
 //   .then(data => console.log(JSON.stringify(data)))
 //   .catch(error => console.log(error));
 
@@ -246,4 +250,137 @@ addCartItem(`/api/storefront/carts/`, `e02d95a9-8c52-4b5a-92ef-4a0ab2ca7adb`, {
 // 0048640f-27db-4b1f-acba-370317f3f14c
 
 
+// function addCartItem(url, cartId, cartItems) {
+//   return fetch(url + cartId + '/items', {
+//     method: "POST",
+//     credentials: "same-origin",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(cartItems),
+//   })
+//   .then(response => response.json());
+// };
+
+// addCartItem(`/api/storefront/carts/`, `c0866992-a191-4b9b-b48d-0211c7a2e7e9`, {
+//   "lineItems": [
+//     {
+//       "quantity": 1,
+//       "productId": 384,
+//       "variantId": 1155
+//     }
+//   ]
+// })
+// .then(data => console.log(JSON.stringify(data)))
+// .catch(error => console.error(error));
+
+
+
+</script>
+
+
+<script>
+  $(document).ready(function(){
+
+    
+    $(".tab-content.active .rowtab-content .sec").click(function(e){
+      $(this).addClass("active");
+      console.log($(".tab-content.active .rowtab-content .sec.active span").text().replace("$", ""));
+      console.log(data-product-price-without-tax);
+    //   $(".tab-content.active .rowtab-content .sec.active > a").toggle();
+    //   console.log($(".tab-content.active .rowtab-content .sec.active > a").is(':visible'))
+    //   if($(".tab-content.active .rowtab-content .sec.active > a").is(':visible')){
+
+    //   }else{
+    //     $(".tab-content.active .rowtab-content .sec.active > a").css("display","block");
+    //     $(".tab-content.active .rowtab-content .sec.active > a i").removeClass("fa-plus");
+    //     $(".tab-content.active .rowtab-content .sec.active > a i").addClass("fa-minus");
+    //   }
+      // $(".tab-content.active .rowtab-content .sec").addClass("active-sec");
+
+    //   $(".tab-content.active .rowtab-content .sec a.active i").removeClass("fa-plus");
+    //   $(".tab-content.active .rowtab-content .sec a.active i").addClass("fa-minus");
+    });
+    
+  });
+</script>
+
+<!-- Working to pag existing na sa cart -->
+<!-- Working dn pag wala pang laman cart -->
+<script>
+// $("#form-action-addToCart").click(function() {  
+
+// fetch('/api/storefront/carts?include=',
+// {
+//   'credentials':'include',
+//   'headers':{
+//     'Accept':'application/json', 
+//     'Content-Type': 'application/json'
+//   }
+// }).then(function (response){ 
+//   response.json().then(function(data) {
+
+
+
+//     function createCart(url, cartItems) {
+//     return fetch(url, {
+//       method: "POST",
+//       credentials: "same-origin",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify(cartItems),
+//     })
+//     .then(response => response.json());
+//   };
+
+
+//   createCart(`/api/storefront/carts`, {
+//     "lineItems": [
+//       {
+//         "quantity": 1,
+//         "productId": 384,
+//         "variantId": 1155
+//       }
+//     ]}
+//   )
+//   .then(data => console.log(JSON.stringify(data)))
+//   .catch(error => console.error(error));
+      // var jsonObj = JSON.stringify(data,['id']);
+      // console.log(jsonObj);
+      // var jsonParse = JSON.stringify(data[0].id);
+      // console.log(jsonParse);
+      // var yourString =  JSON.stringify(data[0].id);
+      // var result = yourString.substring(1, yourString.length-1);
+
+      // console.log(result);
+    
+    // function addCartItem(url, cartId, cartItems) {
+    //   return fetch(url + cartId + '/items', {
+    //     method: "POST",
+    //     credentials: "same-origin",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(cartItems),
+    //   })
+    //   .then(response => response.json());
+    // };
+
+    // addCartItem(`/api/storefront/carts/`, result, {
+    //   "lineItems": [
+    //     {
+    //       "quantity": 1,
+    //       "productId": 384,
+    //       "variantId": 1155
+    //     }
+    //   ]
+    // })
+    // .then(data => console.log(JSON.stringify(data)))
+    // .catch(error => console.error(error));
+
+//   })
+// });
+
+// });
 </script>
