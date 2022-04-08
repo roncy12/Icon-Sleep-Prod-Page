@@ -26,7 +26,8 @@
       "custom-fake-reviews.html": "/fake-reviews/",
       "custom-testpage.html": "/support-page/",
       "custom-privacy-policy.html": "/privacy-policy/",
-      "custom-green-tea-memory.html": "/product-page/"
+      "custom-green-tea-memory.html": "/product-page/",
+      "affirm--template.html":"/affirm/"
     },
     "category": {
       "custom-category.html": "/custom-category/",

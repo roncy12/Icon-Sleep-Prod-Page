@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Almarai&family=Montserrat&family=Raleway&family=Roboto&display=swap');
+
+
 .mobileMenu-toggle.is-open .mobileMenu-toggleIcon {
     background-color: transparent!important;
     transition-delay: 100ms;
@@ -504,6 +507,7 @@ h1.another-mattress-title {
     line-height: 1.5;
     letter-spacing: 1;
     font-size: 15px;
+    font-family: 'Raleway', sans-serif;
 }
 
 .homepage-mattress-section.row {
@@ -752,11 +756,7 @@ a.test-mattress-button {
     margin-block-start: 0em;
     margin-block-end: 0em;
 }
-.slick-next, .slick-prev {
-    width: 2.8rem;
-    border-radius: 100%;
-    height: 3rem;
-}
+
 
 .navUser-item--cart .navUser-action {
     color: #132448 !important;
@@ -5441,6 +5441,7 @@ ul.check-blue.hybrid li {
     .banner div>p>span {
         text-transform: capitalize;
         font-size: 16px;
+        color: #fff;
     }
     li.navUser-item.navUser-item--account a {
         padding: 1.2rem 0;
@@ -5487,6 +5488,10 @@ ul.check-blue.hybrid li {
         font-size: 18px;
         font-weight: 800;
         margin: 1.5rem 0 0;
+
+        @media screen and (max-width: 1425px) {
+            font-size: 16px;
+        }
     }
     .shop-best-seller .best-sgrid .best-sbox a {
         background: #264da3;
@@ -5513,7 +5518,7 @@ ul.check-blue.hybrid li {
             padding: 3rem;
         }
     }
-    .custom-stcontainer .stamped-carousel-title, .custom-stcontainer .stamped-carousel-subtitle {
+    .custom-stcontainer .stamped-carousel-subtitle {
         display: none;
     }
     #stamped-reviews-widget[data-widget-type=carousel] a {
@@ -5548,11 +5553,11 @@ ul.check-blue.hybrid li {
     }
 
     .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-carousel-buttons {
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 999;
+        // position: absolute;
+        // width: 100%;
+        // top: 50%;
+        // transform: translateY(-50%);
+        // z-index: 999;
     }
     .custom-stcontainer .stamped-carousel-button-right {
         position: absolute;
@@ -5560,12 +5565,19 @@ ul.check-blue.hybrid li {
         top: 0;
     }
     .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-carousel-buttons div {
-        font-size: 65px;
+        // font-size: 65px;
         color: #ffff;
     }
 
     .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-carousel-scroll:before{
         border-bottom: 2px solid transparent;
+    }
+    
+   .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-carousel-title:empty:before {
+        content: "See what others thinks about ICON SLEEP";
+        color: #fff;
+        font-weight: 800;
+        font-size: 28px;
     }
     .custom-stcontainer h4 {
         max-width: 85%;
@@ -5575,7 +5587,7 @@ ul.check-blue.hybrid li {
         font-size: 28px;
     }
     .custom-stcontainer #stamped-reviews-widget {
-        width: 85%!important;
+        max-width: 85%!important;
     }
     .custom-stcontainer .stamped-ratings-wrapper {
         display: flex;
@@ -5584,13 +5596,16 @@ ul.check-blue.hybrid li {
     .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-reviews-date{
         display: none;
     }
+    .custom-stcontainer #stamped-reviews-widget[data-widget-type=carousel] .stamped-carousel-scroll{
+        height: 180px !important;
+    }
     .links-header.head-cart-icon {
         @media screen and (min-width: 801px) {
             margin-top: 1.5rem;
         }
     }
     .heroCarousel-content {
-        left: 7% !important;
+        left: 6% !important;
 
         @media screen and (max-width: 1280px) {
             width: auto;
@@ -5622,7 +5637,7 @@ ul.check-blue.hybrid li {
 
     .another-mattress.feature-matt .another-mattress-description {
         @media screen and (max-width: 1425px) {
-            max-width: 90%;
+            // max-width: 90%;
         }
     }
     .fetures-gridcon {
@@ -5759,7 +5774,7 @@ ul.check-blue.hybrid li {
         margin-top: 0;
     }
     .question-grid div p {
-        border-left: 1px solid #132448;
+        border-left: 1px solid #264da3;
         padding-left: 2rem;
         margin-left: 1rem;
     }
@@ -5790,16 +5805,27 @@ ul.check-blue.hybrid li {
         width: 85%;
         margin: 0 auto;
         display: flex;
+        
+        @media screen and (max-width: 800px) {
+            flex-direction: column;
+        }
     }
     .get-intouch>div:first-child {
         width: 35%;
+        @media screen and (max-width: 800px) {
+            width: 100%;
+        }
     }
     .get-intouch>div:last-child {
         width: 65%;
+        @media screen and (max-width: 800px) {
+            width: 100%;
+        }
     }
     .get-intouch h2{
         color: #132448;
         font-weight: 900;
+        margin-top: 5rem;
 
     }
     .get-in-bg{
@@ -5856,3 +5882,9 @@ ul.check-blue.hybrid li {
         margin-top: 4rem !important;
     }
     
+    p{
+        font-family: 'Raleway', sans-serif;
+    }
+    .us-banner-description span {
+        font-family: 'Raleway', sans-serif;
+    }

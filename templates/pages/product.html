@@ -109,6 +109,7 @@ product:
             {{/all}}
             {{> components/products/tabs}}
         </div>
+      
         <!-- Modal Adding To Cart -->
           <div class="loading-Modal">
             <h3 class="progressModal-heading">Adding your products to cart</h3>
@@ -128,22 +129,22 @@ product:
 
 <script>
     $(document).ready(function(){
-        $("#cart-click-item").click(function() {
-            $(".loading-Modal").css("display","block");
-            $(".progressModal-overlay").css("display","block");
+        // $("#cart-click-item").click(function() {
+        //     $(".loading-Modal").css("display","block");
+        //     $(".progressModal-overlay").css("display","block");
             
         
-        });
-        $("#cart-click-item1").click(function() {
-            $(".loading-Modal").css("display","block");
-            $(".progressModal-overlay").css("display","block");
+        // });
+        // $("#cart-click-item1").click(function() {
+        //     $(".loading-Modal").css("display","block");
+        //     $(".progressModal-overlay").css("display","block");
         
-        });
-        $("#cart-click-item2").click(function() {
-            $(".loading-Modal").css("display","block");
-            $(".progressModal-overlay").css("display","block");
+        // });
+        // $("#cart-click-item2").click(function() {
+        //     $(".loading-Modal").css("display","block");
+        //     $(".progressModal-overlay").css("display","block");
         
-        });
+        // });
     });
 </script>
 
@@ -162,21 +163,21 @@ product:
 //     .catch(err => {
 //      console.error(err);
 // });
-function getCart(url) {
-  return fetch(url, {
-    method: "GET",
-    credentials: "same-origin"
-  })
-  .then(response => response.json());
+// function getCart(url) {
+//   return fetch(url, {
+//     method: "GET",
+//     credentials: "same-origin"
+//   })
+//   .then(response => response.json());
 
-}
+// }
 
-getCart('/api/storefront/carts?include=lineItems.physicalItems.productId/include=lineItems.physicalItems.productId')
-  .then(data => console.log(JSON.stringify(data)))
-  .catch(error => console.error(error));
+// getCart('/api/storefront/carts?include=lineItems.physicalItems.productId/include=lineItems.physicalItems.productId')
+//   .then(data => console.log(JSON.stringify(data)))
+//   .catch(error => console.error(error));
 
-  var obj = data => JSON.stringify(data);
-  console.log(obj);
+//   var obj = data => JSON.stringify(data);
+//   console.log(obj);
 
 // function createCart(url, cartItems) {
 //   return fetch(url, {
@@ -239,7 +240,7 @@ getCart('/api/storefront/carts?include=lineItems.physicalItems.productId/include
 //   .then(response => response.json());
 // }
 
-// deleteCartItem(`/api/storefront/carts/`, `8386e3ed-8a1e-4027-8fb0-dfeb6bb83074`)
+// deleteCartItem(`/api/storefront/carts/`, `36cdc6df-8bdf-4d21-a38c-f94cc112f431`)
 //   .then(data => console.log(JSON.stringify(data)))
 //   .catch(error => console.log(error));
 
@@ -284,9 +285,15 @@ getCart('/api/storefront/carts?include=lineItems.physicalItems.productId/include
 
     
     $(".tab-content.active .rowtab-content .sec").click(function(e){
-      $(this).addClass("active");
-      console.log($(".tab-content.active .rowtab-content .sec.active span").text().replace("$", ""));
-      console.log(data-product-price-without-tax);
+      // $(this).addClass("active");
+      // console.log($(".tab-content.active .rowtab-content .sec.active span").text().replace("$", ""));
+      // console.log($(".productView-price .price-section .price.price--withoutTax").text());
+      // var sum = 0;
+      // var addons = $(".tab-content.active .rowtab-content .sec.active span").text().replace("$", "");
+      // var origprice = $(".productView-price .price-section .price.price--withoutTax").text().replace("$", "");
+      // console.log(origprice)
+      // console.log(sum = parseInt(addons) + parseInt(origprice));
+
     //   $(".tab-content.active .rowtab-content .sec.active > a").toggle();
     //   console.log($(".tab-content.active .rowtab-content .sec.active > a").is(':visible'))
     //   if($(".tab-content.active .rowtab-content .sec.active > a").is(':visible')){

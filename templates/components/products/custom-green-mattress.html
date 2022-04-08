@@ -127,29 +127,8 @@
             <div class="productView-product green-matt-prod">
 
                 <div class="custom-productTitle green-matt-title stamped-display">
-                    <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
-                    <div class="d-flex align-items-center grn-matt-price  w-100">
-                        <h4 class="productView-price">Total Price: &nbsp </h4>
-                        {{#if product.call_for_price}}
-                        <p class="productView-price">
-                            <span style="font-size: 28px; font-weight: 800;">{{product.call_for_price}}</span>
-                        </p>
-                        {{/if}}
-                        <div class="productView-price"  style="font-size: 28px; font-weight: 800;">
-                            {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
-                                {{> components/products/price price=product.price schema_org=schema}}
-                            {{else}}
-                                {{> components/common/login-for-pricing}}
-                            {{/or}}
-                        </div>
-                        <!--u-hiddenVisually-->
-                    <div class="form-field form-field--stock {{#unless product.stock_level}}out-stock{{/unless}}">
-                        <label class="form-label form-label--alternate">
-                            <!--{{lang 'products.current_stock'}}-->
-                            <span style="display: none !important;"  data-product-stock >{{product.stock_level}}</span>
-                        </label>
-                    </div>
-                   </div>
+                    <h1 class="productView-title mt-2" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
+                    
                     <!-- {{#if product.brand}}
                         <h2 class="productView-brand"{{#if schema}} itemprop="brand" itemscope itemtype="http://schema.org/Brand"{{/if}}>
                             <a href="{{product.brand.url}}"{{#if schema}} itemprop="url"{{/if}}><span{{#if schema}} itemprop="name"{{/if}}>{{product.brand.name}}</span></a>
@@ -158,11 +137,32 @@
                   
                         <!-- <div id="stamped-reviews-widget" class="grn-matt-stamp" style="display: inline-block;" data-widget-type="site-badge" data-badge-type="minimal" data-title="Verified Reviews" data-title-size="15" data-size-stars="12" data-element-id="2" data-lang="en">&nbsp;</div>
                         <div id="stamped-main-widget" data-widget-style="standard" data-product-id="{{ product.id }}" data-title="Customer Reviews" data-style-color-title="#2f2f2b" data-style-color-text="#2f2f2b" data-style-color-link="#2f2f2b" data-fill-empty="true" data-random="? string:Customer Reviews ?" data-product-image="true"></div>    -->                   
-                    <div class="productView-description green-matt-desc ul" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+                    <div class="productView-description green-matt-desc ul mt-2" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}} style="margin-bottom: 0 !important">
                         {{{product.description}}}
                         {{{snippet 'product_description'}}}
                     </div>
- 
+                     <div class="d-flex align-items-center grn-matt-price  w-100">
+                                            <h4 class="productView-price">Total Price: &nbsp </h4>
+                                            {{#if product.call_for_price}}
+                                            <p class="productView-price">
+                                                <span style="font-size: 28px; font-weight: 800;">{{product.call_for_price}}</span>
+                                            </p>
+                                            {{/if}}
+                                            <div class="productView-price"  style="font-size: 28px; font-weight: 800;">
+                                                {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                                                    {{> components/products/price price=product.price schema_org=schema}}
+                                                {{else}}
+                                                    {{> components/common/login-for-pricing}}
+                                                {{/or}}
+                                            </div>
+                                            <!--u-hiddenVisually-->
+                                        <div class="form-field form-field--stock">
+                                            <label class="form-label form-label--alternate">
+                                                <!--{{lang 'products.current_stock'}}-->
+                                                <span style="display: none !important;"  data-product-stock >{{product.stock_level}}</span>
+                                            </label>
+                                        </div>
+                                       </div>
                     <!-- <div id="stamped-reviews-widget" style="display: inline-block;" data-widget-type="site-badge" data-badge-type="minimal" data-title="Verified Reviews" data-title-size="15" data-size-stars="12" data-element-id="2" data-lang="en">&nbsp;</div> -->
                 
                 </div>
@@ -245,8 +245,13 @@
                     </dl>
                 {{/or}}
 
-                
-                <div class="complete-set-tab">
+                <div class="shipsdelivery-container">
+                    <p>Ships by: <span class="blue">{{moment "now" "MM/DD/YYYY"}}</span></p>
+                    <p>Delivery: <span>Within 2-7 Days</span></p>
+                </div>
+                <p class="learn-shipment">*To learn more about shipping, check out our <a href="/shipping-transit-chart/" style="color:#00d2ff;"> Shipment Transit Chart.</a></p>
+          
+                <div class="complete-set-tab d-none" style="display: none">
                     <h5>Complete the Set</h5>
                     <div class="tabs-section">
                       <h4 class="row nav-tab-wrapper mw-100">
@@ -266,24 +271,6 @@
                                 <span class="price">$12.99</span>
                             </div>
                       </div>
-                      <div class="rowtab-content">
-                        <div class="first"> <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/images/stencil/1280x1280/products/380/3209/GM_cutaway-WB1412608285_original__26919.1630638220.jpg?c=1" alt=""> </div>
-                        <div class="sec">
-                            <h4><a href="#" >Malouf Gelled Microfiber® + Gel Dough® Layer</a></h4>
-                            <!-- <a href="/cart.php?action=add&sku=ZZKKX2GG&_ga=2.232531935.1167043985.1648430507-1538258752.1648430507" id="cart-click-item1"><i class="fas fa-plus" id="add"></i></a> -->
-                            <a href="#"><i class="fas fa-plus" id="add"></i></a> 
-                            <span class="price">$59.99</span>
-                        </div>
-                     </div>
-                     <div class="rowtab-content border-0">
-                        <div class="first"> <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/images/stencil/1280x1280/products/378/3165/ZZ_MPADZG_ZonedGel_AD_Hero-icon-WB1516136873_original__82197.1630637082.jpg?c=1" alt=""> </div>
-                        <div class="sec">
-                            <h4><a href="#" >Malouf Zoned Active Dough® + Cooling Gel</a></h4>
-                            <!-- <a href="/cart.php?action=add&sku=ZZKKMPADZG&source=buy_button" id="cart-click-item2"><i class="fas fa-plus" id="add"></i></a> -->
-                            <a href="#"><i class="fas fa-plus" id="add"></i></a> 
-                            <span class="price">$129.99</span>
-                        </div>
-                      </div>
                     </section>
                     <section id="tab-2" class="tab-content">
                         <div class="rowtab-content">
@@ -296,21 +283,9 @@
                           </div>
                       </section>
                 </div>
-    
-                <!-- <div class="prodview-shipping-details grn-matt-ship">
-                    <div style="border-right: 1px solid #888;"> 
-                        <p class="text-uppercase font-weight-normal">Ships by:</p>
-                        <h4>{{moment "now" "MM/DD/YYYY"}}</h4>
-                    </div>
-                    <div>
-                        <p class="text-uppercase font-weight-normal">Delivery by:</p>
-                        <h4 class="text-capitalize">Within 2-7 days*</h4>
-                    </div>
-                </div> -->
-                <!-- <div class="learnmore-div">
-                    <p style="font-size: 14px; margin-top: 4px; text-align: left;">*To learn more about shipping, check out our <a href="/shipping-transit-chart/" style="color:#00d2ff;"> Shipment Transit Chart.</a></p>
-                </div> -->
-                <div class="faqs-desc specs-desc">
+                
+
+                <div class="faqs-desc specs-desc mt-4">
                     <div class="other-detail" style="display: none;">
                     <input id="_0" type="checkbox">
                     <label class="terms-showMore specs-label" for="_0">
@@ -322,13 +297,14 @@
                             <table class="specs-table-prod other-detail" style="width:100%">
                             <div class="productView-info"> 
                                 <!-- {{#each product.custom_fields}} -->
-                         
+                                {{#all (if name '!==' 'Warranty Info')}}
                                     <tr id="tr-data">
                                         <div>
                                             <td class="productView-info-name p-0 py-2">{{name}}:</td>
                                             <td class="productView-info-value p-0">{{{value}}}</td>
                                         </div>
                                     </tr>
+                                 {{/all}}
                              
                                 <!-- {{/each}} -->
                             </div>
@@ -346,16 +322,19 @@
                             <div class="data-table" id="product-attribute-specs-table"> 
                                 <table class="specs-table-prod other-detail" style="width:100%">
                                 <div class="productView-info"> 
-                                    <!-- {{#each product.custom_fields}} -->
-                             
-                                        <tr id="tr-data">
+                            
+                                        <tr id="tr-data measurements" class="measurementData">
                                             <div>
-                                                <!-- <td class="productView-info-name p-0 py-2">{{name}}:</td>
-                                                <td class="productView-info-value p-0">{{{value}}}</td> -->
+                                                <td class="productView-info-name p-0 py-2">Size:</td>
+                                                <td class="productView-info-value p-0">Full 54" x 75", King 76" x 80", Queen 60" x 80", Twin 39" x 75"</td>
                                             </div>
                                         </tr>
-                                 
-                                    <!-- {{/each}} -->
+                                        <tr id="tr-data measurements" class="measurementData">
+                                            <div>
+                                                <td class="productView-info-name p-0 py-2">Thickness:</td>
+                                                <td class="productView-info-value p-0"> 8", 10", 12"</td>
+                                            </div>
+                                        </tr>
                                 </div>
                             </table>
                             </div>
@@ -372,16 +351,18 @@
                             <div class="data-table" id="product-attribute-specs-table"> 
                                 <table class="specs-table-prod other-detail" style="width:100%">
                                 <div class="productView-info"> 
-                                    <!-- {{#each product.custom_fields}} -->
-                             
-                                        <tr id="tr-data">
-                                            <div>
-                                                <!-- <td class="productView-info-name p-0 py-2">{{name}}:</td>
-                                                <td class="productView-info-value p-0">{{{value}}}</td> -->
-                                            </div>
-                                        </tr>
+                                    
+                                    {{#each product.custom_fields}}
+                                        {{#if name "==" "Warranty Info"}}
+                                            <tr id="tr-data warranty">
+                                                <div>
+                                                    <td class="productView-info-name p-0 py-2">{{name}}:</td>
+                                                    <td class="productView-info-value p-0">{{{value}}}</td>
+                                                </div>
+                                            </tr>
+                                        {{/if}}
                                  
-                                    <!-- {{/each}} -->
+                                    {{/each}}
                                 </div>
                             </table>
                             </div>
@@ -448,7 +429,8 @@
         <div class="green-matt-features">
             <div class="re-container">
                 <div class="grn-ftr-text">
-                    <h2>Lorem ipsum dolor sit amet</h2>
+                    <h2>Why we're confident you'll love COOLest Gel</h2>
+                    <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis nunc obdurat. Et tunc curat ludo mentis aciem, egestatem, potestatem dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status malus vana salus semper dissolubilis.</p>
                     <!-- <h2 class="font-weight-bold text-capitalize text-dark">Sleep Has Never Been This Cool</h2>
                     <p>Meet the coolest bed in town. Icon Sleep’s COOL is a gel-infused memory foam mattress equipped with an advanced cooling and heat management system that regulates your body temperature. It’s breathable and comfortable your sleep has never been this cool. </p>     -->
                 </div>
@@ -479,42 +461,28 @@
         <div class="types-of-foams">
             <div class="text-section first">
                 <h4>Knitted Jacquard Fabric</h4>
-                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
-                    nunc obdurat. Et tunc curat ludo mentis aciem, egestatem, potestatem
-                    dissolvit ut glaciem. Sors immanis et inanis. rota tu volubilis status
-                    malus vana salus semper dissolubilis.</p>
+                <p>Intricately designed using precision knitting machines, the COOLest Gel mattress’ exterior fabric has a soft texture, greater extensibility and elasticity in addition to good wrinkle resistance and breathability.</p>
                 <a href="">Learn More</a>
             </div>
             <div class="text-section sec">
                 <h4>COOLest Gel-Infused Memory Foam</h4>
-                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
-                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
-                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
-                    malus vana salus semper dissolubilis.</p>
+                <p>Providing healthy support that helps you wake up free from aches and pains, our gel-infused memory foam regulates body temperature and promotes breathability – creating iconic sleep experiences every night.</p>
                 <a href="">Learn More</a>
             </div>
             <div class="text-section third">
                 <h4>Pressure Relief High-Density Foam</h4>
-                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
-                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
-                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
-                    malus vana salus semper dissolubilis.</p>
+                <p>Having almost twice the density of conventional foams, this high-density layer returns to shape after compression, offering a good balance between the mattress’ softness and support and providing pressure relief during sleep.</p>
                 <a href="">Learn More</a>
             </div>            
             <div class="text-section fourth">
                 <h4>Support High-Density Foam</h4>
-                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
-                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
-                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
-                    malus vana salus semper dissolubilis.</p>
+                <p>COOLest Gel’s ultra-solid base foam is packed with high-density polymer material that gives overall support and durability to the whole mattress while preventing sinking and sagging of the upper layers.
+</p>
                 <a href="">Learn More</a>
             </div>
             <div class="text-section fifth">
                 <h4>Fire Resistant Base</h4>
-                <p>Velut luna statu variabilis, semper crescis aut decrescis vita detestabilis
-                    nunc obdurat. Et tunc curat ludo mentis aciem. egestatem, potestatem
-                    dissolvit ut glaciem. Sors immanis et inanis, rota tu volubilis status
-                    malus vana salus semper dissolubilis.</p>
+                <p>We’ve designed the COOLest Gel mattress to last even in extremely demanding and fire hazardous environments. The base layer contains a fabric that consists of fire retardant materials such as Aramid and rayon.</p>
                 <a href="">Learn More</a>
             </div>
             
@@ -570,7 +538,19 @@
             <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/icon-difference-chart.jpg?t=1648188286&_gl=1*1eavtqq*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
             <p><i style="color: #888;">*All prices are for Queen-sized mattress models.</i></p>
         </div>
-
+        <div class="fiberglass-container">
+            <div>
+                <h2 class="title--style">Our mattress does not container fiberglass lorem ipsum dolor sit</h2>
+                <p>No fiberglass curabitur vitae hendrerit magna. Proin laoreet in ipsum
+                    non suscipit. Fusce bibendum lacinia sem, et scelerisque magna
+                    dignissim quis. Nulla facilisi. Sed eget sem sed mi consequat euismod
+                    ac et urna.</p>
+                <a href="" class="button-action">Learn More</a>
+            </div>
+            <div>
+                <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/mattclose-1.png?t=1649382767&_gl=1*y93mbv*_ga*ODk3ODY0MTgwLjE2NDg4MDI1OTE.*_ga_WS2VZYPC6G*MTY0OTM4MDkyNy4xMjIuMS4xNjQ5MzgyODAyLjYw" alt="close-matt" class="w-100">
+            </div>
+        </div>
         <div class="we-learned-section">
             <div class="img-content">
                 <img class="w-100" src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/usa-learned.png?t=1648190363&_gl=1*ylbr7k*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0ODE4NTg0OS43MS4wLjE2NDgxODU4NDkuNjA." alt="">
@@ -608,24 +588,24 @@
                         <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
                         <h4>What's the best mattress size for me?</h4>
                     </div>
-                    <p>Choosing the right mattress size depends on several factors. Are you sharing your bed with a partner or pets? Do you like having plenty of living space in your bedroom? How do you want your bed to be placed?</p>
-                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                    <p>Choosing the right mattress size depends on several factors. Are you sharing your bed with a partner or pets? Do you like having plenty of living space in your bedroom? How do you want your bed to be placed? <br/><br/><a href="https://icon-sleep.com/faqs/" class="pl-0 font-weight-bold">Read More</a></p>
+                    
                 </div>
                 <div class="grid-con">
                     <div class="title-flex">
                         <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
                         <h4>What type of foundation should I use for my mattress?</h4>
                     </div>
-                    <p>Our mattresses can work with almost all standard foundations. The harder and sturdier the base, the better the mattress will perform, as with all foam beds. Platform bases offer the most support, but steel or wooden...</p>
-                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                    <p>Our mattresses can work with almost all standard foundations. The harder and sturdier the base, the better the mattress will perform, as with all foam beds. Platform bases offer the most support, but steel or wooden... <br/><br/><a href="https://icon-sleep.com/faqs/" class="pl-0 font-weight-bold">Read More</a></p>
+                   
                 </div>
                 <div class="grid-con">
                     <div class="title-flex">
                         <img src="https://cdn11.bigcommerce.com/s-z2qdisybty/product_images/uploaded_images/question-mark-icon.png?t=1647925466&_gl=1*8pzu4b*_ga*Nzk0NzIwMzUxLjE2NDY2MzgxMzc.*_ga_WS2VZYPC6G*MTY0NzkyNTA4Mi41MS4xLjE2NDc5MjU0NTUuNTU." alt="">
                         <h4>How long should I wait before I can use my mattress?</h4>
                     </div>
-                    <p>You may start using it right out of the box! Take note, however, that it would take 48 hours up to a week for your mattress to fully decompress. Sleeping on your mattress can help with the decompression.</p>
-                    <a href="https://icon-sleep.com/reviews/">Read More</a>
+                    <p>You may start using it right out of the box! Take note, however, that it would take 48 hours up to a week for your mattress to fully decompress. Sleeping on your mattress can help with the decompression.<br/><br/><a href="https://icon-sleep.com/faqs/" class="pl-0 font-weight-bold">Read More</a></p>
+                    
                 </div>
                 <div class="grid-con">
                     <div class="title-flex">
@@ -633,7 +613,7 @@
                         <h4>Have other questions?</h4>
                     </div>
                     <p>Feel free to contact us via<br>
-                        Toll-free number: <b>+123 456 7890</b><br>
+                        <span class="d-none">Toll-free number: <b>+123 456 7890</b><br></span>
                         Email us at: <b>support@icon-sleep.com</b><br>
                         Or fill in the contact form below.<br><br>
                         Service Hours:<br>
@@ -646,26 +626,13 @@
             <div class="get-intouch">
                 <div>
                     <h2>Get in Touch</h2>
-                    <p>Curabitur sapien dui, rutrum id sem et, mollis varius dolor. Suspendisse ac aliquam orci. Proin diam risus, ornare id pellentesque sit amet,</p>
+                    <p>We keep our lines open to customers who need assistance. Feel free to reach us by using this inquiry form or by visiting our Support Center.</p>
                 </div>
                 <div>
-                    <form data-contact-form class="form" action="/pages.php?action=sendContactForm" method="post">
-                        <div class="form-row form-row--half">
-                            <div class="form-field">
-                                <label for="fname">Name</label>
-                                <input type="text" id="fname" name="fname" placeholder="Name">
-                                <label for="email">Email </label>
-                                <input type="email" id="email" name="email" placeholder="Email">
-                            </div>
-                            <div class="form-field">
-                                <label for="msg">Message</label>
-                                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Your Inquiry" style="height: 80px;"></textarea><br<br>
-                                <div class="form-actions">
-                                    <input class="button button--primary" type="submit" value="Send Message">
-                                </div>
-                            </div>
-                        </div>
-                      </form>
+                    <div class="new-jotforms">
+                        <script type="text/javascript" src="https://form.jotform.com/jsform/220881192930052"></script>
+                    </div>
+            
                 </div>
             </div>
         </div>
@@ -861,9 +828,8 @@
     background: #00d2ff;
     color: #fff;
     margin-bottom: 0;
-    border-radius: 10px;
-    margin-left: 4px;
-    padding: 0 4px;
+    border-radius: 14px;
+    padding: 4px 24px;
     text-transform: uppercase;
     font-family: 'Almarai';
     font-size: 14px;
@@ -874,9 +840,8 @@
     background: red;
     color: #fff;
     margin-bottom: 0;
-    border-radius: 10px;
-    margin-left: 4px;
-    padding: 0 4px;
+    border-radius: 14px;
+    padding: 4px 24px;
     text-transform: uppercase;
     font-family: 'Almarai';
     font-size: 14px;
@@ -887,20 +852,23 @@
 <script>
     $(document).ready(function() {
 
-        $(".form-select, .form-option-swatch").click(function(){
+        $(".form-select").click(function(){
+
+            console.log($(this));
             setTimeout(function(){
                 var variantStock = $('[data-product-stock]').text();
-                            
-                if(variantStock >= "1"){
+                console.log(variantStock);
+                if(variantStock >= 1){ 
                     $(".form-field.form-field--stock").addClass("in-stock");
-                    $(".form-field.form-field--stock").removeClass("out-stock");                    
-                }else if(variantStock == "0" || variantStock == ""){
+                    $(".form-field.form-field--stock").removeClass("out-stock");   
+                    console.log("instock to");
+                              
+                }else if(variantStock == "0"){
                     $(".form-field.form-field--stock").addClass("out-stock");
                     $(".form-field.form-field--stock").removeClass("in-stock");
                 }else{
-
                 }
-            },1000);
+            },1000);  
         });
 
         setTimeout(function(){
@@ -908,16 +876,15 @@
             if(window.BCData.product_attributes.instock == true){
                 setTimeout(function(){
                     $(".form-field.form-field--stock").addClass("in-stock");
-                    $(".form-field.form-field--stock").removeClass("out-stock"); 
-                    $(".form-field.form-field--stock").removeClass("u-hiddenVisually");
+                    $(".form-field.form-field--stock.in-stock").removeClass("u-hiddenVisually");
 
                 },1000);
 
             }else{
                 setTimeout(function(){
                     $(".form-field.form-field--stock").addClass("out-stock");
-                    $(".form-field.form-field--stock").removeClass("in-stock "); 
-                    $(".form-field.form-field--stock").removeClass("u-hiddenVisually");
+                    $(".form-field.form-field--stock.in-stock.out-stock").removeClass("u-hiddenVisually");
+                  
                 },1000);
             }
         },1000);
@@ -977,3 +944,62 @@
 <script type="text/javascript">//<![CDATA[ 
 StampedFn.init({ apiKey: 'pubkey-2L5A8636KNO175w7kxJ92V55UDvpz3', storeUrl: 'icon-sleep.com' }); 
 // ]]></script>
+
+<script>
+    $(document).ready(function(){
+
+        var measurementData = $(".form-select.form-select--small :not(option[value='']").text();
+
+        // $(".measurementData td").text(measurementData);
+        // console.log( $(measurementData.indexOf("8'")).text());
+        $(".form-select.form-select--small :not(option[value='']").each(function(index, item){
+            // console.log(element.text());
+            // $(".measurementData").append('<td class="productView-info-name"></td>');
+            // for(var i=0; i<=this; i++){
+                // $(".measurementData td").html($(this).eq(0).html());
+                // $(".measurementData td").html($(this).eq(index).html());
+                // console.log($(this).html());
+
+            // }
+
+        //    if(index >=0  && index <=4 ){
+            // $(".measurementData td").html( index);
+        //    }
+
+            // for(var i = 1; i <= num; i++) {
+
+            // }
+                // return element < 4;
+// 
+            // if(parseInt($(item).data(index))>2){
+            //     console.log($(item).html());
+            // }
+
+        });
+       
+    });
+    
+</script>
+<script>
+     $(document).ready(function(){
+        // $.each($(".form-select.form-select--small :not(option[value='']"), function(index, value) { 
+        //     // console.log(index + ':' + value); 
+        //     // $(".measurementData td").html(value);
+        // });
+        // let text = "";
+
+        //     for (let i = 0; i < 5; i++) {
+        //         $(".measurementData").append('<td class="productView-info-name"></td>');
+        //         text += "The number is " + i + "<br>";
+        //         console.log(text);
+        //         $(".measurementData td").innerHTML = text;
+        //     }
+        // for (let i=0; i<=3; i++){
+        //     $(".measurementData").append('<td class="productView-info-name"></td>');
+        //     $(".measurementData td").html('Number:'+ i)
+        // }
+     });
+</script>
+<style>
+
+</style>

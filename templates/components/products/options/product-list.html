@@ -9,20 +9,21 @@
     {{#if values.0.image}}
         <ul class="productOptions-list">
             {{#unless required}}
-                <li class="productOptions-list-item">
-                    <input class="form-radio"
-                           type="radio"
-                           name="attribute[{{id}}]"
-                           value=""
-                           id="attribute_productlist_{{id}}_none"
-                           checked="{{#if defaultValue '==' ''}}checked{{/if}}">
-                    <label class="form-label" for="attribute_productlist_{{id}}_none">{{lang 'products.none'}}</label>
-                </li>
+                <li class="productOptions-list-item d-flex">
+                    <div class="order-1"> 
+                        <input class="form-radio"
+                            type="radio"
+                            name="attribute[{{id}}]"
+                            value=""
+                            id="attribute_productlist_{{id}}_none"
+                            checked="{{#if defaultValue '==' ''}}checked{{/if}}">
+                        <label class="form-label" for="attribute_productlist_{{id}}_none">{{lang 'products.none'}}</label>
+                    </div>
             {{/unless}}
             {{#each values}}
-                <li class="productOptions-list-item" data-product-attribute-value="{{id}}">
+                <!-- <li class="productOptions-list-item" data-product-attribute-value="{{id}}"> -->
                     {{#if image}}
-                        <figure class="productOptions-list-item-figure">
+                        <figure class="productOptions-list-item-figure order-0">
                             {{> components/common/responsive-img
                                 image=image
                                 class="productOptions-list-item-image"
@@ -30,7 +31,7 @@
                             }}
                         </figure>
                     {{/if}}
-                    <div class="productOptions-list-item-content">
+                    <div class="productOptions-list-item-content order-2">
                         <input
                             class="form-radio"
                             type="radio"
@@ -44,7 +45,8 @@
                             {{#if ../required}}required{{/if}}>
                         <label data-product-attribute-value="{{id}}" class="form-label" for="attribute_productlist_{{../id}}_{{id}}">{{label}}</label>
                     </div>
-                </li>
+                <!-- </li> -->
+                 </li>
             {{/each}}
         </ul>
     {{else}}

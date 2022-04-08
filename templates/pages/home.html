@@ -24,7 +24,13 @@ blog:
 {{/partial}}
 
 {{#partial "page"}}
-
+<style>
+    .slick-next, .slick-prev {
+        width: 2.8rem;
+        border-radius: 100%;
+        height: 3rem;
+    }
+</style>
     {{#each shipping_messages}}
         {{> components/common/alert/alert-info message}}
     {{/each}}

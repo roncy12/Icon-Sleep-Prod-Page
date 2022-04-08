@@ -130,4 +130,15 @@
         </div>
         {{> components/products/bulk-discount-rates}}
     </div>
+    <script type="text/javascript">
+        {{#if page_type '===' 'product'}}
+        var divRating = document.createElement("div"); 
+        divRating.setAttribute('id', 'stamped-badge-widget'); 
+        divRating.setAttribute('class', 'stamped-product-reviews-badge stamped-main-badge'); 
+        divRating.setAttribute('data-id',"{{product.id}}"); 
+        divRating.setAttribute('data-product-sku',"{{product.sku}}"); 
+        document.querySelectorAll('.productView-price')[0].appendChild(divRating) 
+        {{/if}}
+        </script>
+        <span class="stamped-product-reviews-badge" data-id="{{id}}" data-product-sku="{{sku}}" style="display:block;"></span>
 </article>

@@ -453,6 +453,22 @@
         "name": "header_bottom"
       }
     ],
+    "pages/custom/product/alternate-product": [],
+    "pages/custom/product/custom-product": [],
+    "pages/custom/product/product-new-mattress": [
+      {
+        "name": "header_bottom--global"
+      },
+      {
+        "name": "header_bottom"
+      },
+      {
+        "name": "product_below_price"
+      },
+      {
+        "name": "product_below_content"
+      }
+    ],
     "pages/custom/page/custom-about-us": [
       {
         "name": "header_bottom--global"
@@ -557,7 +573,7 @@
         "name": "header_bottom"
       }
     ],
-    "pages/custom/page/custom-warranty-policy": [
+    "pages/custom/page/is-comparison": [
       {
         "name": "header_bottom--global"
       },
@@ -566,14 +582,6 @@
       }
     ],
     "pages/custom/page/icon-sleep-story": [
-      {
-        "name": "header_bottom--global"
-      },
-      {
-        "name": "header_bottom"
-      }
-    ],
-    "pages/custom/page/is-comparison": [
       {
         "name": "header_bottom--global"
       },
@@ -597,20 +605,12 @@
         "name": "header_bottom"
       }
     ],
-    "pages/custom/product/alternate-product": [],
-    "pages/custom/product/custom-product": [],
-    "pages/custom/product/product-new-mattress": [
+    "pages/custom/page/custom-warranty-policy": [
       {
         "name": "header_bottom--global"
       },
       {
         "name": "header_bottom"
-      },
-      {
-        "name": "product_below_price"
-      },
-      {
-        "name": "product_below_content"
       }
     ]
   },
@@ -681,6 +681,9 @@
     "pages/custom/category/bedding",
     "pages/custom/category/mattresses",
     "pages/custom/category/toppers",
+    "pages/custom/product/alternate-product",
+    "pages/custom/product/custom-product",
+    "pages/custom/product/product-new-mattress",
     "pages/custom/page/custom-about-us",
     "pages/custom/page/custom-categ",
     "pages/custom/page/custom-fake-reviews",
@@ -694,14 +697,11 @@
     "pages/custom/page/custom-support",
     "pages/custom/page/custom-testpage",
     "pages/custom/page/custom-track-order",
-    "pages/custom/page/custom-warranty-policy",
-    "pages/custom/page/icon-sleep-story",
     "pages/custom/page/is-comparison",
+    "pages/custom/page/icon-sleep-story",
     "pages/custom/page/IS-faqs",
     "pages/custom/page/IS-Truth",
-    "pages/custom/product/alternate-product",
-    "pages/custom/product/custom-product",
-    "pages/custom/product/product-new-mattress",
+    "pages/custom/page/custom-warranty-policy",
     "components/carousel-content-announcement",
     "components/carousel-content",
     "components/carousel-play-pause-button",
@@ -732,8 +732,8 @@
     "components/page/rss_feed",
     "components/search/advanced-search",
     "components/search/content-count",
-    "components/search/content-sort-box",
     "components/search/content-listing",
+    "components/search/content-sort-box",
     "components/search/heading",
     "components/search/product-count",
     "components/search/product-listing",
@@ -749,16 +749,63 @@
     "components/cart/gift-certificate-input",
     "components/cart/item-giftwrap",
     "components/cart/item-options",
-    "components/cart/preview",
     "components/cart/page-title",
+    "components/cart/preview",
     "components/cart/shipping-estimator",
     "components/cart/shipping-quotes",
     "components/cart/status-messages",
     "components/cart/totals",
     "components/cart/modals/configure-product",
     "components/cart/modals/gift-wrapping-form",
-    "components/common/body",
+    "components/faceted-search/faceted-search-navigation",
+    "components/faceted-search/index",
+    "components/faceted-search/selected-facets",
+    "components/faceted-search/show-more-facets",
+    "components/faceted-search/facets/hierarchy-children",
+    "components/faceted-search/facets/hierarchy",
+    "components/faceted-search/facets/multi",
+    "components/faceted-search/facets/range",
+    "components/faceted-search/facets/rating",
+    "components/products/add-to-cart",
+    "components/products/bulk-discount-rates",
+    "components/products/card",
+    "components/products/carousel",
+    "components/products/custom-green-mattress",
+    "components/products/description-tabs",
+    "components/products/description",
+    "components/products/event-date",
+    "components/products/featured",
+    "components/products/filter",
+    "components/products/grid",
+    "components/products/list-item",
+    "components/products/list",
+    "components/products/new",
+    "components/products/price-range",
+    "components/products/price",
+    "components/products/product-aria-label",
+    "components/products/product-badge",
+    "components/products/product-view",
+    "components/products/quick-view",
+    "components/products/ratings",
+    "components/products/related",
+    "components/products/reviews",
+    "components/products/tabs",
+    "components/products/top",
+    "components/products/videos",
+    "components/products/modals/writeReview",
+    "components/products/options/date",
+    "components/products/options/input-checkbox",
+    "components/products/options/input-file",
+    "components/products/options/input-numbers",
+    "components/products/options/input-text",
+    "components/products/options/product-list",
+    "components/products/options/set-radio",
+    "components/products/options/set-rectangle",
+    "components/products/options/set-select",
+    "components/products/options/swatch",
+    "components/products/options/textarea",
     "components/common/bedding-nav",
+    "components/common/body",
     "components/common/breadcrumbs",
     "components/common/cart-preview",
     "components/common/currency-selector",
@@ -783,8 +830,8 @@
     "components/common/responsive-img",
     "components/common/search-box",
     "components/common/share",
-    "components/common/small-paginator",
     "components/common/shop-our-mattress-nav",
+    "components/common/small-paginator",
     "components/common/social-links",
     "components/common/store-logo",
     "components/common/subscription-form",
@@ -794,17 +841,17 @@
     "components/common/alert/alert-info",
     "components/common/alert/alert-modal",
     "components/common/alert/alert-success",
+    "components/common/modal/modal-close-btn",
+    "components/common/modal/modal",
     "components/common/forms/checkbox",
     "components/common/forms/date",
-    "components/common/forms/number",
     "components/common/forms/multiline",
+    "components/common/forms/number",
     "components/common/forms/password",
     "components/common/forms/radio",
     "components/common/forms/select",
     "components/common/forms/selectortext",
     "components/common/forms/text",
-    "components/common/modal/modal-close-btn",
-    "components/common/modal/modal",
     "components/amp/category/product-listing",
     "components/amp/category/styles",
     "components/amp/category/subcategories",
@@ -839,58 +886,11 @@
     "components/amp/products/options/input-checkbox",
     "components/amp/products/options/input-file",
     "components/amp/products/options/input-numbers",
-    "components/amp/products/options/input-text",
     "components/amp/products/options/product-list",
     "components/amp/products/options/set-radio",
     "components/amp/products/options/set-rectangle",
     "components/amp/products/options/set-select",
     "components/amp/products/options/swatch",
-    "components/faceted-search/faceted-search-navigation",
-    "components/faceted-search/selected-facets",
-    "components/faceted-search/show-more-facets",
-    "components/faceted-search/facets/hierarchy-children",
-    "components/faceted-search/facets/hierarchy",
-    "components/faceted-search/facets/range",
-    "components/faceted-search/facets/rating",
-    "components/faceted-search/facets/multi",
-    "components/faceted-search/index",
-    "components/products/add-to-cart",
-    "components/products/bulk-discount-rates",
-    "components/products/card",
-    "components/products/custom-green-mattress",
-    "components/products/carousel",
-    "components/products/description-tabs",
-    "components/products/description",
-    "components/products/event-date",
-    "components/products/featured",
-    "components/products/filter",
-    "components/products/list-item",
-    "components/products/grid",
-    "components/products/list",
-    "components/products/price-range",
-    "components/products/price",
-    "components/products/product-aria-label",
-    "components/products/product-badge",
-    "components/products/product-view",
-    "components/products/quick-view",
-    "components/products/ratings",
-    "components/products/related",
-    "components/products/reviews",
-    "components/products/tabs",
-    "components/products/videos",
-    "components/products/top",
-    "components/products/modals/writeReview",
-    "components/products/options/date",
-    "components/products/options/input-checkbox",
-    "components/products/options/input-file",
-    "components/products/options/input-numbers",
-    "components/products/options/input-text",
-    "components/products/options/product-list",
-    "components/products/options/set-radio",
-    "components/products/options/set-rectangle",
-    "components/products/options/set-select",
-    "components/products/options/swatch",
-    "components/products/options/textarea",
-    "components/products/new"
+    "components/amp/products/options/input-text"
   ]
 }
